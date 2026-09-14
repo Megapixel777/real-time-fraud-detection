@@ -2,6 +2,7 @@ import random
 from datetime import datetime, timezone
 from typing import ClassVar
 
+from fraud_detection.generator.scenario import TransactionScenario
 from fraud_detection.generator.transaction import Transaction
 
 
@@ -27,14 +28,29 @@ class TransactionGenerator:
         "TRAVEL",
     ]
 
-    def generate(self) -> Transaction:
+    SUSPICIOUS_MERCHANTS: ClassVar[list[str]] = [
+        "CRYPTO_EXCHANGE",
+        "UNKNOWN_MERCHANT",
+        "UNREGULATED_BROKER",
+    ]
+
+    def generate(
+        self,
+        scenario: TransactionScenario = TransactionScenario.NORMAL,
+    ) -> Transaction:
+        merchant = (
+            random.choice(self.SUSPICIOUS_MERCHANTS)
+            if scenario == TransactionScenario.SUSPICIOUS_MERCHANT
+            else random.choice(self.MERCHANTS)
+        )
+
         return Transaction(
             transaction_id=self._generate_transaction_id(),
             customer_id=self._generate_customer_id(),
-            amount=self._generate_amount(),
+            amount=self._generate_amount(scenario),
             currency=random.choice(self.CURRENCIES),
             country=random.choice(self.COUNTRIES),
-            merchant=random.choice(self.MERCHANTS),
+            merchant=merchant,
             timestamp=datetime.now(timezone.utc),
             device_id=self._generate_device_id(),
         )
@@ -52,5 +68,8 @@ class TransactionGenerator:
         return f"DEV-{random.randint(1000, 9999)}"
 
     @staticmethod
-    def _generate_amount() -> float:
+    def _generate_amount(scenario: TransactionScenario) -> float:
+        if scenario == TransactionScenario.HIGH_AMOUNT:
+            return round(random.uniform(5000, 20000), 2)
+
         return round(random.uniform(1, 500), 2)
