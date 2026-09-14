@@ -1,0 +1,9 @@
+dependencies = [
+    "kafka-python",
+    "fastapi",
+    "uvicorn",
+    "pandas",
+    "numpy",
+    "scikit-learn",
+    "pydantic",
+]
