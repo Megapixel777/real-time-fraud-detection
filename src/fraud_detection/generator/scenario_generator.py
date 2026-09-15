@@ -29,3 +29,28 @@ class ScenarioGenerator:
             transactions.append(transaction)
 
         return transactions
+
+    def generate_country_hopping(
+        self,
+        customer_id: str = "C-1001",
+        countries: list[str] | None = None,
+        interval_seconds: int = 20,
+    ) -> list[Transaction]:
+        countries = countries or ["ES", "FR", "DE", "IT", "GB"]
+
+        start_time = datetime.now(timezone.utc)
+
+        transactions = []
+
+        for i, country in enumerate(countries):
+            timestamp = start_time + timedelta(seconds=i * interval_seconds)
+
+            transaction = self.transaction_generator.generate(
+                customer_id=customer_id,
+                timestamp=timestamp,
+            )
+
+            transaction.country = country
+            transactions.append(transaction)
+
+        return transactions
