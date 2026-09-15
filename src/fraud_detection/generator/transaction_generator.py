@@ -35,8 +35,10 @@ class TransactionGenerator:
     ]
 
     def generate(
-        self,
-        scenario: TransactionScenario = TransactionScenario.NORMAL,
+    self,
+    scenario: TransactionScenario = TransactionScenario.NORMAL,
+    customer_id: str | None = None,
+    timestamp: datetime | None = None,
     ) -> Transaction:
         merchant = (
             random.choice(self.SUSPICIOUS_MERCHANTS)
@@ -46,12 +48,12 @@ class TransactionGenerator:
 
         return Transaction(
             transaction_id=self._generate_transaction_id(),
-            customer_id=self._generate_customer_id(),
+            customer_id=customer_id or self._generate_customer_id(),
             amount=self._generate_amount(scenario),
             currency=random.choice(self.CURRENCIES),
             country=random.choice(self.COUNTRIES),
             merchant=merchant,
-            timestamp=datetime.now(timezone.utc),
+            timestamp=timestamp or datetime.now(timezone.utc),
             device_id=self._generate_device_id(),
         )
 
