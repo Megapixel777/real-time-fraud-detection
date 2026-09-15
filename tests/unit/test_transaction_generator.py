@@ -1,7 +1,8 @@
+from datetime import datetime, timezone
+
 from fraud_detection.generator.scenario import TransactionScenario
 from fraud_detection.generator.transaction import Transaction
 from fraud_detection.generator.transaction_generator import TransactionGenerator
-from datetime import datetime, timezone
 
 
 def test_generate_returns_transaction():
