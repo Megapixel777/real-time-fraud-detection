@@ -35,12 +35,12 @@ class TransactionGenerator:
     ]
 
     def generate(
-    self,
-    scenario: TransactionScenario = TransactionScenario.NORMAL,
-    customer_id: str | None = None,
-    timestamp: datetime | None = None,
-    country: str | None = None,
-    device_id: str | None = None,
+        self,
+        scenario: TransactionScenario = TransactionScenario.NORMAL,
+        customer_id: str | None = None,
+        timestamp: datetime | None = None,
+        country: str | None = None,
+        device_id: str | None = None,
     ) -> Transaction:
         merchant = (
             random.choice(self.SUSPICIOUS_MERCHANTS)

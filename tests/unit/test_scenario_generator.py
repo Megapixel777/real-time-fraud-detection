@@ -14,10 +14,8 @@ def test_generate_velocity_attack():
 
     assert len(transactions) == 5
 
-    assert all(
-        transaction.customer_id == "C-1001"
-        for transaction in transactions
-    )
+    assert all(transaction.customer_id == "C-1001" for transaction in transactions)
+
 
 def test_velocity_attack_transactions_are_time_ordered():
     generator = ScenarioGenerator()
@@ -30,6 +28,7 @@ def test_velocity_attack_transactions_are_time_ordered():
 
     for previous, current in pairwise(transactions):
         assert current.timestamp > previous.timestamp
+
 
 def test_generate_country_hopping():
     generator = ScenarioGenerator()
@@ -44,12 +43,10 @@ def test_generate_country_hopping():
 
     assert len(transactions) == 5
 
-    assert all(
-        transaction.customer_id == "C-1001"
-        for transaction in transactions
-    )
+    assert all(transaction.customer_id == "C-1001" for transaction in transactions)
 
     assert [transaction.country for transaction in transactions] == countries
+
 
 def test_country_hopping_respects_interval():
     generator = ScenarioGenerator()
@@ -62,6 +59,7 @@ def test_country_hopping_respects_interval():
 
     for previous, current in pairwise(transactions):
         assert (current.timestamp - previous.timestamp).total_seconds() == 30
+
 
 def test_generate_multi_device():
     generator = ScenarioGenerator()
@@ -81,9 +79,19 @@ def test_generate_multi_device():
 
     assert len(transactions) == 4
 
-    assert all(
-        transaction.customer_id == "C-1001"
-        for transaction in transactions
-    )
+    assert all(transaction.customer_id == "C-1001" for transaction in transactions)
 
     assert [transaction.device_id for transaction in transactions] == device_ids
+
+
+def test_multi_device_respects_interval():
+    generator = ScenarioGenerator()
+
+    transactions = generator.generate_multi_device(
+        customer_id="C-1001",
+        device_ids=["DEV-1", "DEV-2", "DEV-3"],
+        interval_seconds=30,
+    )
+
+    for previous, current in pairwise(transactions):
+        assert (current.timestamp - previous.timestamp).total_seconds() == 30

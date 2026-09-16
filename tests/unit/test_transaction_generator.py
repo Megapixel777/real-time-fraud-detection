@@ -38,14 +38,14 @@ def test_high_amount_scenario():
 
     assert 5000 <= transaction.amount <= 20000
 
+
 def test_suspicious_merchant_scenario():
     generator = TransactionGenerator()
 
-    transaction = generator.generate(
-        TransactionScenario.SUSPICIOUS_MERCHANT
-    )
+    transaction = generator.generate(TransactionScenario.SUSPICIOUS_MERCHANT)
 
     assert transaction.merchant in TransactionGenerator.SUSPICIOUS_MERCHANTS
+
 
 def test_generate_with_custom_customer_and_timestamp():
     generator = TransactionGenerator()
