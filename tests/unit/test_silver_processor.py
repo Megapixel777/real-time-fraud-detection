@@ -1,9 +1,6 @@
 from datetime import datetime, timezone
 
 from pyspark.sql import SparkSession
-
-from fraud_detection.streaming.silver_processor import validate_transactions
-
 from pyspark.sql.types import (
     DoubleType,
     StringType,
@@ -11,6 +8,8 @@ from pyspark.sql.types import (
     StructType,
     TimestampType,
 )
+
+from fraud_detection.streaming.silver_processor import validate_transactions
 
 
 def create_spark_session() -> SparkSession:
