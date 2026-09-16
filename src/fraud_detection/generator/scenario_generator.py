@@ -54,3 +54,34 @@ class ScenarioGenerator:
             transactions.append(transaction)
 
         return transactions
+
+    def generate_multi_device(
+        self,
+        customer_id: str = "C-1001",
+        device_ids: list[str] | None = None,
+        interval_seconds: int = 20,
+    ) -> list[Transaction]:
+        device_ids = device_ids or [
+            "DEV-1001",
+            "DEV-2001",
+            "DEV-3001",
+            "DEV-4001",
+            "DEV-5001",
+        ]
+
+        start_time = datetime.now(timezone.utc)
+
+        transactions = []
+
+        for i, device_id in enumerate(device_ids):
+            timestamp = start_time + timedelta(seconds=i * interval_seconds)
+
+            transaction = self.transaction_generator.generate(
+                customer_id=customer_id,
+                timestamp=timestamp,
+                device_id=device_id,
+            )
+
+            transactions.append(transaction)
+
+        return transactions

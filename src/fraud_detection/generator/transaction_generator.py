@@ -39,7 +39,8 @@ class TransactionGenerator:
     scenario: TransactionScenario = TransactionScenario.NORMAL,
     customer_id: str | None = None,
     timestamp: datetime | None = None,
-    country: str | None = None
+    country: str | None = None,
+    device_id: str | None = None,
     ) -> Transaction:
         merchant = (
             random.choice(self.SUSPICIOUS_MERCHANTS)
@@ -55,7 +56,7 @@ class TransactionGenerator:
             country=country or random.choice(self.COUNTRIES),
             merchant=merchant,
             timestamp=timestamp or datetime.now(timezone.utc),
-            device_id=self._generate_device_id(),
+            device_id=device_id or self._generate_device_id(),
         )
 
     @staticmethod
