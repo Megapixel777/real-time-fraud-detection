@@ -1,20 +1,8 @@
 from typing import ClassVar
 
-from pydantic import BaseModel
-
-from fraud_detection.fraud.rules import (
-    is_country_hopping,
-    is_high_amount,
-    is_multi_device,
-    is_velocity_attack,
-)
+from fraud_detection.fraud.result import FraudDetectionResult
+from fraud_detection.fraud.signals import FraudSignals
 from fraud_detection.generator.transaction import Transaction
-
-
-class FraudResult(BaseModel):
-    is_fraud: bool
-    fraud_score: float
-    fraud_reasons: list[str]
 
 
 class FraudEngine:
@@ -28,20 +16,20 @@ class FraudEngine:
     def evaluate(
         self,
         transaction: Transaction,
-        transactions: list[Transaction],
-    ) -> FraudResult:
-        reasons = []
+        signals: FraudSignals,
+    ) -> FraudDetectionResult:
+        reasons: list[str] = []
 
-        if is_high_amount(transaction):
+        if signals.high_amount:
             reasons.append("HIGH_AMOUNT")
 
-        if is_velocity_attack(transactions):
+        if signals.velocity_attack:
             reasons.append("VELOCITY_ATTACK")
 
-        if is_country_hopping(transactions):
+        if signals.country_hopping:
             reasons.append("COUNTRY_HOPPING")
 
-        if is_multi_device(transactions):
+        if signals.multi_device:
             reasons.append("MULTI_DEVICE")
 
         fraud_score = min(
@@ -49,7 +37,15 @@ class FraudEngine:
             1.0,
         )
 
-        return FraudResult(
+        return FraudDetectionResult(
+            transaction_id=transaction.transaction_id,
+            customer_id=transaction.customer_id,
+            timestamp=transaction.timestamp,
+            amount=transaction.amount,
+            currency=transaction.currency,
+            country=transaction.country,
+            merchant=transaction.merchant,
+            device_id=transaction.device_id,
             is_fraud=fraud_score > 0,
             fraud_score=fraud_score,
             fraud_reasons=reasons,

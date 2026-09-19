@@ -1,6 +1,7 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 
 from fraud_detection.fraud.engine import FraudEngine
+from fraud_detection.fraud.signals import FraudSignals
 from fraud_detection.generator.transaction import Transaction
 
 
@@ -28,9 +29,16 @@ def test_high_amount_returns_fraud():
         datetime(2026, 9, 18, 18, 0, tzinfo=timezone.utc),
     )
 
+    signals = FraudSignals(
+        high_amount=True,
+        velocity_attack=False,
+        country_hopping=False,
+        multi_device=False,
+    )
+
     result = FraudEngine().evaluate(
         transaction=transaction,
-        transactions=[transaction],
+        signals=signals,
     )
 
     assert result.is_fraud is True
@@ -44,9 +52,16 @@ def test_normal_transaction_returns_no_fraud():
         datetime(2026, 9, 18, 18, 0, tzinfo=timezone.utc),
     )
 
+    signals = FraudSignals(
+        high_amount=False,
+        velocity_attack=False,
+        country_hopping=False,
+        multi_device=False,
+    )
+
     result = FraudEngine().evaluate(
         transaction=transaction,
-        transactions=[transaction],
+        signals=signals,
     )
 
     assert result.is_fraud is False
@@ -55,39 +70,21 @@ def test_normal_transaction_returns_no_fraud():
 
 
 def test_multiple_rules_are_combined():
-    base_timestamp = datetime(
-        2026,
-        9,
-        18,
-        18,
-        0,
-        tzinfo=timezone.utc,
+    transaction = create_transaction(
+        5000.0,
+        datetime(2026, 9, 18, 18, 0, tzinfo=timezone.utc),
     )
 
-    transactions = [
-        create_transaction(
-            5000.0,
-            base_timestamp + timedelta(seconds=0),
-            country="ES",
-            device_id="DEV-1001",
-        ),
-        create_transaction(
-            100.0,
-            base_timestamp + timedelta(seconds=20),
-            country="FR",
-            device_id="DEV-2001",
-        ),
-        create_transaction(
-            100.0,
-            base_timestamp + timedelta(seconds=40),
-            country="DE",
-            device_id="DEV-3001",
-        ),
-    ]
+    signals = FraudSignals(
+        high_amount=True,
+        velocity_attack=False,
+        country_hopping=True,
+        multi_device=True,
+    )
 
     result = FraudEngine().evaluate(
-        transaction=transactions[0],
-        transactions=transactions,
+        transaction=transaction,
+        signals=signals,
     )
 
     assert result.is_fraud is True
@@ -97,3 +94,29 @@ def test_multiple_rules_are_combined():
         "COUNTRY_HOPPING",
         "MULTI_DEVICE",
     ]
+
+
+def test_fraud_engine_returns_structured_result():
+    transaction = create_transaction(
+        7500.0,
+        datetime(2026, 9, 18, 18, 0, tzinfo=timezone.utc),
+    )
+
+    signals = FraudSignals(
+        high_amount=True,
+        velocity_attack=False,
+        country_hopping=False,
+        multi_device=False,
+    )
+
+    result = FraudEngine().evaluate(
+        transaction=transaction,
+        signals=signals,
+    )
+
+    assert result.transaction_id == "TX-000001"
+    assert result.customer_id == "C-1001"
+    assert result.amount == 7500.0
+    assert result.is_fraud is True
+    assert result.fraud_score == 0.30
+    assert result.fraud_reasons == ["HIGH_AMOUNT"]
