@@ -1,4 +1,4 @@
-from pyspark.sql import SparkSession
+from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.functions import col, from_json
 from pyspark.sql.types import (
     DoubleType,
@@ -13,7 +13,6 @@ KAFKA_TOPIC = "fraud-transactions"
 
 BRONZE_PATH = "/opt/spark-apps/data/bronze/transactions"
 CHECKPOINT_PATH = "/opt/spark-apps/data/bronze/checkpoint"
-
 
 TRANSACTION_SCHEMA = StructType(
     [
@@ -38,9 +37,23 @@ def create_spark_session() -> SparkSession:
     )
 
 
+def process_batch(batch_df: DataFrame, batch_id: int) -> None:
+    row_count = batch_df.count()
+
+    print(
+        f"[Bronze] batch_id={batch_id} | "
+        f"rows={row_count}"
+    )
+
+    (
+        batch_df.write
+        .mode("append")
+        .parquet(BRONZE_PATH)
+    )
+
+
 def main() -> None:
     spark = create_spark_session()
-
     spark.sparkContext.setLogLevel("WARN")
 
     kafka_df = (
@@ -66,9 +79,7 @@ def main() -> None:
     query = (
         transactions_df
         .writeStream
-        .format("parquet")
-        .outputMode("append")
-        .option("path", BRONZE_PATH)
+        .foreachBatch(process_batch)
         .option("checkpointLocation", CHECKPOINT_PATH)
         .start()
     )
