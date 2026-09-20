@@ -10,7 +10,6 @@ from fraud_detection.streaming.stateful_fraud_processor import (
     flatten_stateful_fraud_windows,
 )
 
-
 SILVER_PATH = "/opt/spark-apps/data/silver/transactions"
 GOLD_PATH = "/opt/spark-apps/data/gold/fraud_transactions_stateful"
 CHECKPOINT_PATH = (

@@ -9,7 +9,6 @@ from pyspark.sql.types import (
     TimestampType,
 )
 
-
 GOLD_PATH = "/opt/spark-apps/data/gold/fraud_transactions_stateful"
 
 CHECKPOINT_PATH = (
