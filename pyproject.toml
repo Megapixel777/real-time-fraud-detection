@@ -7,4 +7,5 @@ dependencies = [
     "scikit-learn",
     "pydantic",
     "psycopg[binary]",
+    "httpx2",
 ]

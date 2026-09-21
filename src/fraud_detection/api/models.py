@@ -17,3 +17,11 @@ class TransactionResponse(BaseModel):
     fraud_score: Decimal
     fraud_reasons: list[str]
     created_at: datetime
+
+
+class FraudInvestigationResponse(BaseModel):
+    transaction: TransactionResponse
+    fraud_detected: bool
+    fraud_score: Decimal
+    risk_level: str
+    triggered_rules: list[str]
