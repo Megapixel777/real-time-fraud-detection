@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from unittest.mock import MagicMock
 
 from fraud_detection.generator.transaction import Transaction
@@ -18,7 +18,7 @@ def test_send_transaction():
         currency="EUR",
         country="ES",
         merchant="ONLINE_STORE",
-        timestamp=datetime(2026, 9, 16, 10, 0, tzinfo=timezone.utc),
+        timestamp=datetime(2026, 9, 16, 10, 0, tzinfo=UTC),
         device_id="DEV-1001",
     )
 

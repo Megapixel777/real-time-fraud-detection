@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from pyspark.sql import SparkSession
 
@@ -36,7 +36,7 @@ def test_build_fraud_signals():
                     18,
                     0,
                     0,
-                    tzinfo=timezone.utc,
+                    tzinfo=UTC,
                 ),
                 "DEV-1001",
                 5,
@@ -94,7 +94,7 @@ def test_build_fraud_signals_for_normal_transaction():
                     18,
                     0,
                     0,
-                    tzinfo=timezone.utc,
+                    tzinfo=UTC,
                 ),
                 "DEV-2001",
                 1,
@@ -152,7 +152,7 @@ def test_build_fraud_decision():
                     18,
                     0,
                     0,
-                    tzinfo=timezone.utc,
+                    tzinfo=UTC,
                 ),
                 "DEV-1001",
                 5,

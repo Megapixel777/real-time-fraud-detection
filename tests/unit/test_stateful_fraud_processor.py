@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
@@ -26,7 +26,7 @@ def test_build_stateful_fraud_windows():
             (
                 "TX-000001",
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 0, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 0, tzinfo=UTC),
                 100.0,
                 "EUR",
                 "ES",
@@ -36,7 +36,7 @@ def test_build_stateful_fraud_windows():
             (
                 "TX-000002",
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 10, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 10, tzinfo=UTC),
                 200.0,
                 "EUR",
                 "FR",
@@ -46,7 +46,7 @@ def test_build_stateful_fraud_windows():
             (
                 "TX-000003",
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 20, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 20, tzinfo=UTC),
                 300.0,
                 "EUR",
                 "DE",
@@ -56,7 +56,7 @@ def test_build_stateful_fraud_windows():
             (
                 "TX-000004",
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 30, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 30, tzinfo=UTC),
                 150.0,
                 "EUR",
                 "ES",
@@ -66,7 +66,7 @@ def test_build_stateful_fraud_windows():
             (
                 "TX-000005",
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 40, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 40, tzinfo=UTC),
                 250.0,
                 "EUR",
                 "FR",

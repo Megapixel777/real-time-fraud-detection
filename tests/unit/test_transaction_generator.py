@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fraud_detection.generator.scenario import TransactionScenario
 from fraud_detection.generator.transaction import Transaction
@@ -50,7 +50,7 @@ def test_suspicious_merchant_scenario():
 def test_generate_with_custom_customer_and_timestamp():
     generator = TransactionGenerator()
 
-    timestamp = datetime(2026, 9, 14, 18, 0, 0, tzinfo=timezone.utc)
+    timestamp = datetime(2026, 9, 14, 18, 0, 0, tzinfo=UTC)
 
     transaction = generator.generate(
         customer_id="C-1001",

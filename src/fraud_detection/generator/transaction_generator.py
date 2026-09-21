@@ -1,5 +1,5 @@
 import random
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import ClassVar
 
 from fraud_detection.generator.scenario import TransactionScenario
@@ -55,7 +55,7 @@ class TransactionGenerator:
             currency=random.choice(self.CURRENCIES),
             country=country or random.choice(self.COUNTRIES),
             merchant=merchant,
-            timestamp=timestamp or datetime.now(timezone.utc),
+            timestamp=timestamp or datetime.now(UTC),
             device_id=device_id or self._generate_device_id(),
         )
 

@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from fraud_detection.fraud.rules import (
     is_country_hopping,
@@ -21,7 +21,7 @@ def create_transaction(
         country="ES",
         merchant="ONLINE_STORE",
         timestamp=timestamp
-        or datetime(2026, 9, 18, 18, 0, tzinfo=timezone.utc),
+        or datetime(2026, 9, 18, 18, 0, tzinfo=UTC),
         device_id="DEV-1001",
     )
 
@@ -45,7 +45,7 @@ def test_velocity_attack_is_detected():
         18,
         18,
         0,
-        tzinfo=timezone.utc,
+        tzinfo=UTC,
     )
 
     transactions = [
@@ -80,7 +80,7 @@ def test_country_hopping_is_detected():
         18,
         18,
         0,
-        tzinfo=timezone.utc,
+        tzinfo=UTC,
     )
 
     transactions = [
@@ -112,7 +112,7 @@ def test_country_hopping_is_not_detected_with_two_countries():
         18,
         18,
         0,
-        tzinfo=timezone.utc,
+        tzinfo=UTC,
     )
 
     transactions = [
@@ -143,7 +143,7 @@ def test_multi_device_is_detected():
         18,
         18,
         0,
-        tzinfo=timezone.utc,
+        tzinfo=UTC,
     )
 
     transactions = [
@@ -175,7 +175,7 @@ def test_multi_device_is_not_detected_with_two_devices():
         18,
         18,
         0,
-        tzinfo=timezone.utc,
+        tzinfo=UTC,
     )
 
     transactions = [

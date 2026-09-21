@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from decimal import Decimal
 from unittest.mock import MagicMock, patch
 
@@ -13,7 +13,7 @@ client = TestClient(app)
 TRANSACTION = {
     "transaction_id": "TX-TEST-001",
     "customer_id": "CUSTOMER-001",
-    "timestamp": datetime(2026, 9, 21, 10, 0, 0, tzinfo=timezone.utc),
+    "timestamp": datetime(2026, 9, 21, 10, 0, 0, tzinfo=UTC),
     "amount": Decimal("125.50"),
     "currency": "EUR",
     "country": "ES",
@@ -25,7 +25,7 @@ TRANSACTION = {
         "VELOCITY_ATTACK",
         "COUNTRY_HOPPING",
     ],
-    "created_at": datetime(2026, 9, 21, 10, 0, 1, tzinfo=timezone.utc),
+    "created_at": datetime(2026, 9, 21, 10, 0, 1, tzinfo=UTC),
 }
 
 

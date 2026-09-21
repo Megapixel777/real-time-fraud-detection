@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from pyspark.sql import SparkSession
@@ -47,7 +47,7 @@ def test_silver_processing_from_bronze(tmp_path: Path):
                 "EUR",
                 "ES",
                 "ONLINE_STORE",
-                datetime(2026, 9, 16, 20, 0, tzinfo=timezone.utc),
+                datetime(2026, 9, 16, 20, 0, tzinfo=UTC),
                 "DEV-1001",
             ),
             (
@@ -57,7 +57,7 @@ def test_silver_processing_from_bronze(tmp_path: Path):
                 "EUR",
                 "ES",
                 "ONLINE_STORE",
-                datetime(2026, 9, 16, 20, 1, tzinfo=timezone.utc),
+                datetime(2026, 9, 16, 20, 1, tzinfo=UTC),
                 "DEV-1002",
             ),
         ]

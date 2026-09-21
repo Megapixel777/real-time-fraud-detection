@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from pyspark.sql import SparkSession
 from pyspark.sql.types import (
@@ -29,7 +29,7 @@ def create_transaction_df(spark: SparkSession, **overrides):
         "currency": "EUR",
         "country": "ES",
         "merchant": "ONLINE_STORE",
-        "timestamp": datetime(2026, 9, 16, 20, 0, tzinfo=timezone.utc),
+        "timestamp": datetime(2026, 9, 16, 20, 0, tzinfo=UTC),
         "device_id": "DEV-1001",
     }
 

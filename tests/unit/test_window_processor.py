@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from pyspark.sql import SparkSession
 
@@ -27,15 +27,15 @@ def test_create_customer_windows():
         data = [
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 0, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 0, tzinfo=UTC),
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 20, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 20, tzinfo=UTC),
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 40, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 40, tzinfo=UTC),
             ),
         ]
 
@@ -63,23 +63,23 @@ def test_detect_velocity_attacks():
         data = [
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 0, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 0, tzinfo=UTC),
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 10, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 10, tzinfo=UTC),
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 20, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 20, tzinfo=UTC),
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 30, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 30, tzinfo=UTC),
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 40, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 40, tzinfo=UTC),
             ),
         ]
 
@@ -108,17 +108,17 @@ def test_detect_country_hopping():
         data = [
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 0, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 0, tzinfo=UTC),
                 "ES",
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 20, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 20, tzinfo=UTC),
                 "FR",
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 40, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 40, tzinfo=UTC),
                 "DE",
             ),
         ]
@@ -147,17 +147,17 @@ def test_detect_multi_device():
         data = [
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 0, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 0, tzinfo=UTC),
                 "DEV-1001",
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 20, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 20, tzinfo=UTC),
                 "DEV-2001",
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 40, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 40, tzinfo=UTC),
                 "DEV-3001",
             ),
         ]
@@ -185,31 +185,31 @@ def test_create_fraud_windows():
         data = [
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 0, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 0, tzinfo=UTC),
                 "ES",
                 "DEV-1001",
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 10, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 10, tzinfo=UTC),
                 "FR",
                 "DEV-2001",
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 20, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 20, tzinfo=UTC),
                 "DE",
                 "DEV-3001",
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 30, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 30, tzinfo=UTC),
                 "ES",
                 "DEV-1001",
             ),
             (
                 "C-1001",
-                datetime(2026, 9, 18, 18, 0, 40, tzinfo=timezone.utc),
+                datetime(2026, 9, 18, 18, 0, 40, tzinfo=UTC),
                 "FR",
                 "DEV-2001",
             ),

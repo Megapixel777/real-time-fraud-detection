@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fraud_detection.fraud.engine import FraudEngine
 from fraud_detection.fraud.signals import FraudSignals
@@ -26,7 +26,7 @@ def create_transaction(
 def test_high_amount_returns_fraud():
     transaction = create_transaction(
         5000.0,
-        datetime(2026, 9, 18, 18, 0, tzinfo=timezone.utc),
+        datetime(2026, 9, 18, 18, 0, tzinfo=UTC),
     )
 
     signals = FraudSignals(
@@ -49,7 +49,7 @@ def test_high_amount_returns_fraud():
 def test_normal_transaction_returns_no_fraud():
     transaction = create_transaction(
         100.0,
-        datetime(2026, 9, 18, 18, 0, tzinfo=timezone.utc),
+        datetime(2026, 9, 18, 18, 0, tzinfo=UTC),
     )
 
     signals = FraudSignals(
@@ -72,7 +72,7 @@ def test_normal_transaction_returns_no_fraud():
 def test_multiple_rules_are_combined():
     transaction = create_transaction(
         5000.0,
-        datetime(2026, 9, 18, 18, 0, tzinfo=timezone.utc),
+        datetime(2026, 9, 18, 18, 0, tzinfo=UTC),
     )
 
     signals = FraudSignals(
@@ -99,7 +99,7 @@ def test_multiple_rules_are_combined():
 def test_fraud_engine_returns_structured_result():
     transaction = create_transaction(
         7500.0,
-        datetime(2026, 9, 18, 18, 0, tzinfo=timezone.utc),
+        datetime(2026, 9, 18, 18, 0, tzinfo=UTC),
     )
 
     signals = FraudSignals(

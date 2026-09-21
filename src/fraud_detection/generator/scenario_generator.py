@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from fraud_detection.generator.transaction import Transaction
 from fraud_detection.generator.transaction_generator import TransactionGenerator
@@ -14,7 +14,7 @@ class ScenarioGenerator:
         transaction_count: int = 5,
         interval_seconds: int = 20,
     ) -> list[Transaction]:
-        start_time = datetime.now(timezone.utc)
+        start_time = datetime.now(UTC)
 
         transactions = []
 
@@ -38,7 +38,7 @@ class ScenarioGenerator:
     ) -> list[Transaction]:
         countries = countries or ["ES", "FR", "DE", "IT", "GB"]
 
-        start_time = datetime.now(timezone.utc)
+        start_time = datetime.now(UTC)
 
         transactions = []
 
@@ -69,7 +69,7 @@ class ScenarioGenerator:
             "DEV-5001",
         ]
 
-        start_time = datetime.now(timezone.utc)
+        start_time = datetime.now(UTC)
 
         transactions = []
 

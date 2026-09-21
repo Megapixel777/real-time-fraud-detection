@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fraud_detection.generator.transaction import Transaction
 
@@ -11,7 +11,7 @@ def test_transaction_creation():
         currency="EUR",
         country="ES",
         merchant="ONLINE_STORE",
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.now(UTC),
         device_id="DEV-8831",
     )
 
